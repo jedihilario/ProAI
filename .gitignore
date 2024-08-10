@@ -1,3 +1,6 @@
-## Ignore node configs
+# Ignore node configs
 node_modules
 package-lock.json
+
+# Ignore enviorment variables
+.env
