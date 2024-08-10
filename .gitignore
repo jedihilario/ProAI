@@ -1,0 +1,3 @@
+## Ignore node configs
+node_modules
+package_lock.json
