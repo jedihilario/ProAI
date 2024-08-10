@@ -5,6 +5,7 @@ const PORT = process.env.PORT ?? 4321;
 
 const processReq = async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     const data = {};
 
