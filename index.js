@@ -1,18 +1,26 @@
 const http = require('node:http');
-const { pedagogicalAdvice } = require('./src/pedagogicalAdvice');
+const { pedagogicalAdvice } = require('./src/advices');
 
 const PORT = process.env.PORT ?? 4321;
 
 const processReq = async (req, res) => {
+    const { url } = req;
+    const [ URL, DATA ] = url.split('?');
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
-
     const data = {};
+    const params = {};
 
-    await pedagogicalAdvice().then(res => {
-        console.log(res);
-        data.advice = res;
-    }).catch(e => console.error)
+    DATA.split('&').forEach(prop => {
+        const sep = prop.split('=');
+        params[`${sep[0]}`] = sep[1];
+    });
+    
+    if (URL === '/pedagogical') {
+        await pedagogicalAdvice(params).then(res => {
+            data.advice = res;
+        }).catch(e => console.error)
+    }
 
     return res.end(JSON.stringify(data));
 }
