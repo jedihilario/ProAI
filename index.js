@@ -1,5 +1,5 @@
 const http = require('node:http');
-const { pedagogicalAdvice } = require('./src/advices');
+const { pedagogicalAdvice, chat } = require('./src/advices');
 
 const PORT = process.env.PORT ?? 4321;
 
@@ -20,6 +20,10 @@ const processReq = async (req, res) => {
         await pedagogicalAdvice(params).then(res => {
             data.advice = res;
         }).catch(e => console.error)
+    } else if (URL === '/chat') {
+        await chat(params.prompt).then(res => {
+            data.response = res;
+        }).catch(e => console.error);
     }
 
     return res.end(JSON.stringify(data));

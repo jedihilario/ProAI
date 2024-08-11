@@ -18,3 +18,8 @@ exports.vocationalGuidance = async () => {
 
     return text;
 }
+
+exports.chat = async (prompt) => {
+    const text = (await model.generateContent(prompt)).response.text();
+    return text;
+}
