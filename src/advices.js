@@ -1,9 +1,9 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { advicePrompt } = require("./basePrompts")
+const { advicePrompt, vocGuidancePrompt } = require("./basePrompts")
 
 const model = new GoogleGenerativeAI(process.env.API_KEY).getGenerativeModel({ model: "gemini-1.5-flash"});
 
-exports.pedagogicalAdvice = async (props) => {
+exports.pedagogicalAdvice = async props => {
     let prompt = advicePrompt(props);
 
     const text = (await model.generateContent(prompt)).response.text();
@@ -11,8 +11,8 @@ exports.pedagogicalAdvice = async (props) => {
     return text;
 }
 
-exports.vocationalGuidance = async () => {
-    const prompt = 'Contame un chiste';
+exports.vocationalGuidance = async props => {
+    const prompt = vocGuidancePrompt(props);
 
     const text = (await model.generateContent(prompt)).response.text();
 
