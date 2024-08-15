@@ -11,10 +11,15 @@ const processReq = async (req, res) => {
     const data = {};
     const params = {};
 
-    DATA.split('&').forEach(prop => {
-        const sep = prop.split('=');
-        params[`${sep[0]}`] = sep[1];
-    });
+    try {
+        DATA.split('&').forEach(prop => {
+            const sep = prop.split('=');
+            params[`${sep[0]}`] = sep[1];
+        });
+    } catch {
+        res.writeHead(404);
+        return res.end(JSON.stringify({ err: "URL ERROR" }));
+    }
     
     if (URL === '/pedagogical') {
         await pedagogicalAdvice(params).then(res => {
